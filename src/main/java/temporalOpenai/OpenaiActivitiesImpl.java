@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.temporal.activity.Activity;
+import io.temporal.failure.ApplicationFailure;
 
 import java.io.IOException;
 import java.net.URI;
@@ -22,7 +23,7 @@ public class OpenaiActivitiesImpl implements OpenaiActivities {
     @Override
     public String getResponse(Question q) {
 
-        //Create JSON formatted string for the http request body (see static helper function below)
+        //Create JSON formatted string for the http request body (see helper function toJSON() below)
         String requestBody = toJSON(q.getQuestion());
 
         //Build http request with the url, headers, and json data
@@ -53,9 +54,10 @@ public class OpenaiActivitiesImpl implements OpenaiActivities {
             throw Activity.wrap(e);
         }
 
-        //If we received error from api.openai.com return the error message
-        if (!jsonNode.get("error").isNull()) {
-            return "ERROR WITH OPENAI SERVER:\n" + jsonNode.get("error").get("message").asText();
+        //If we receive error from api.openai.com, throw nonRetryableFailure to prevent workflow from retrying this activity
+        if (jsonNode.has("error")) {
+            throw ApplicationFailure.newNonRetryableFailure("ERROR WITH OPENAI SERVER: " + jsonNode.get("error").get("message").asText(),
+                    "NonRetryableError getResponse()");
         }
 
         //Return the content of the first choice message from openai
