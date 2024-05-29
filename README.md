@@ -12,10 +12,10 @@ This application uses Temporal to ensure durable execution of our chatbot by imp
 - [Maven 4.0.0](https://maven.apache.org/download.cgi)
 - [Local Temporal server running](https://docs.temporal.io/application-development/foundations#run-a-development-cluster)
 - [Open AI keys](https://platform.openai.com/account/api-keys)  
-&emsp;- Unfortunately, Openai api keys are not free to use, so payment is required for your api key to function.  
-&emsp;&nbsp;&nbsp;&nbsp;If you are curious to see this application run but are not interested in paying openai for a key, this repository holds images  
-&emsp;&nbsp;&nbsp;&nbsp;of a demo run (featured below) or you can feel free to email me at [seantsullivan04@gmail.com](mailto) and I will be happy to share  
-&emsp;&nbsp;&nbsp;&nbsp;more information about this project.
+  - Unfortunately, Openai api keys are not free to use, so payment is required for your api key to function.
+If you are curious to see this application run but are not interested in paying openai for a key, this repository holds images
+of a demo run (featured below) or you can feel free to email me at [seantsullivan04@gmail.com](mailto) and I will be happy to share
+more information about this project.
 
 With this repository cloned, run the following at the root of the directory:
 
